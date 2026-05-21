@@ -218,6 +218,9 @@
         function showPortal(userId) {
             const user = userData[userId];
             
+            // 🌟 ログイン成功の証拠（通行証）をブラウザに保存（タブを閉じたら消える安全な保存先です）
+            sessionStorage.setItem("game_access_token", "allowed_user_chika");
+
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("portal-screen").style.display = "block";
             document.getElementById("welcome-message").innerText = `✨ ようこそ、${user.name}`;
