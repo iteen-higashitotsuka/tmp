@@ -142,11 +142,14 @@
 <body>
 
     <header>
+        <!--
         <div class="logo-area">
             <div class="logo-placeholder">ここにロゴ画像を配置</div>
+       
         </div>
-        <h1>iteen ゲームポータル</h1>
-        <p class="subtitle">プログラミング教室で作成したゲームにログインして遊ぼう！</p>
+        -->
+        <h1>iTeen 西武東戸塚S.C.校</h1>
+        <p class="subtitle">教室で作成したゲームを遊ぼう！</p>
     </header>
 
     <div class="main-content">
@@ -174,9 +177,10 @@
 
     <div class="access-section">
         <h3>教室へのアクセス</h3>
-        <p style="color: #666; margin-bottom: 5px;">〒000-0000 〇〇県〇〇市〇〇町 1-2-3 〇〇ビル2F</p>
-        <p style="color: #666; margin-top: 0;">お問合わせ：0120-XXX-XXX</p>
-        
+        <p style="color: #666; margin-bottom: 5px;">〒244-8530 神奈川県横浜市戸塚区品濃町５３７−１ 西武東戸塚S.C. モール館 5階</p>
+        <!--
+        <p style="color: #666; margin-top: 0;">お問合わせ：XXXX-XXX-XXX</p>
+        -->
         <div class="map-container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d208618.58077461686!2d139.1545091062556!3d35.21480444325176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60185b17f541a08f%3A0xd373a3b234dedd3e!2zaVRlZW7opb_mrabmnbHmiLjloZpTLkMu5qCh!5e0!3m2!1sja!2sjp!4v1779353865007!5m2!1sja!2sjp"
             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
@@ -218,7 +222,7 @@
         function showPortal(userId) {
             const user = userData[userId];
             
-            // 🌟 ログイン成功の証拠（通行証）をブラウザに保存（タブを閉じたら消える安全な保存先です）
+            // ログイン成功の証拠（通行証）をブラウザに保存（タブを閉じたら消える安全な保存先です）
             sessionStorage.setItem("game_access_token", "allowed_user_chika");
 
             document.getElementById("login-screen").style.display = "none";
