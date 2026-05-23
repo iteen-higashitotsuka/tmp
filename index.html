@@ -203,40 +203,38 @@
     </div>
 
     <script>
-        // 🔑 ユーザーごとの配信データ (categoryを追加)
-        // category: 'game' (ゲーム) / 'edu' (教育・シミュレーション)
+        // 🔑 ユーザー認証データ（IDとパスワード、表示名のみを管理）
         const userData = {
-            "guest_a": {
-                password: "abc123",
-                name: "ゲスト",
-                games: [
-                    { title: "ゾンビゲーム", category: "game", url: "./stu_1/"},
-                    { title: "カーレース", category: "game", url: "./stu2/"},
-                    { title: "3Dシューティング", category: "game", url: "./stu_3/shooting_game"},
-                    { title: "二人対戦", category: "game", url: "./stu_4/game1"},
-                    { title: "ブロック崩し", category: "game", url: "./stu_5/game1"},
-                    { title: "ポテト爆発", category: "game", url: "./stu_6/potato_explosion"},
-                    { title: "棒人間ファイト", category: "game", url: "./stu_6/bouningen_fighting"},
-                    { title: "宇宙シューティング", category: "game", url: "./stu_6/space_shooting"},
-                    { title: "3D建築ゲーム", category: "game", url: "./stu_7/3Dbuilding"},
-                    { title: "タイピング", category: "game", url: "./stu_8/door_typing"},
-                    
-                    // 教育カテゴリーの作品
-                    { title: "地震シミュレーション", category: "edu", url: "./stu_6/earthquake_simulator"},
-                    { title: "降水量シミュレーション", category: "edu", url: "./stu_6/kousuiryou_simulator"}
-                ]
-            },
-            "t_chika": {
-                password: "0610",
-                name: "近村",
-                games: [
-                    { title: "ゾンビゲーム", category: "game", url: "./k20260516/", desc: "アクションゲーム" },
-                    { title: "カーレース", category: "game", url: "./k20260521/", desc: "レースゲーム" },
-                    { title: "シューティング", category: "game", url: "./k20260522_1/shooting_game", desc: "シューティングゲーム" },
-                    { title: "物理演算シミュレータ", category: "edu", url: "./k_physics/", desc: "重力と衝突の実験ツール" }
-                ]
-            }
+            "stu_1": { password: "password1", name: "" },
+            "stu_2": { password: "password2", name: "" },
+            "stu_3": { password: "password3", name: "" },
+            "stu_4": { password: "password4", name: "" },
+            "stu_5": { password: "password5", name: "" },
+            "stu_6": { password: "password6", name: "" },
+            "stu_7": { password: "password7", name: "" },
+            "stu_8": { password: "password8", name: "" },
+            "stu_9": { password: "password9", name: "" },
+            "guest_a": { password: "abc123", name: "ゲスト" } // ゲスト用（全表示用など）
         };
+
+        // 🕹️ すべての作品データ（マスターデータ）
+        const allGames = [
+            { title: "ゾンビゲーム", category: "game", url: "./stu_1/" },
+            { title: "カーレース", category: "game", url: "./stu_2/" },
+            { title: "3Dシューティング", category: "game", url: "./stu_3/shooting_game" },
+            { title: "二人対戦", category: "game", url: "./stu_4/game1" },
+            { title: "ブロック崩し", category: "game", url: "./stu_5/game1" },
+            { title: "ポテト爆発", category: "game", url: "./stu_6/potato_explosion" },
+            { title: "棒人間ファイト", category: "game", url: "./stu_6/bouningen_fighting" },
+            { title: "宇宙シューティング", category: "game", url: "./stu_6/space_shooting" },
+            { title: "3D建築ゲーム", category: "game", url: "./stu_7/3Dbuilding" },
+            { title: "タイピング", category: "game", url: "./stu_8/door_typing" },
+            { title: "パックマン", category: "game", url: "./stu_9/packman" },
+            
+            // 教育カテゴリーの作品
+            { title: "地震シミュレーション", category: "edu", url: "./stu_6/earthquake_simulator" },
+            { title: "降水量シミュレーション", category: "edu", url: "./stu_6/kousuiryou_simulator" }
+        ];
 
         // 現在ログインしているユーザーと選択されているカテゴリーを保持
         let currentUserId = "";
@@ -280,9 +278,6 @@
 
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("portal-screen").style.display = "block";
-            
-            const user = userData[currentUserId];
-            document.getElementById("welcome-message").innerText = `✨ ようこそ、${user.name}`;
 
             // 初期表示は「game」カテゴリー
             switchTab("game");
@@ -290,12 +285,19 @@
 
         // 選択されたカテゴリーの作品だけを画面に描画する関数
         function renderContents() {
-            const user = userData[currentUserId];
             const container = document.getElementById("game-container");
             container.innerHTML = "";
 
-            // ユーザーの全作品から、現在選ばれているカテゴリーと一致するものだけを抽出
-            const filteredGames = user.games.filter(game => game.category === currentCategory);
+            // 💡 【自動振り分けの肝】
+            // ① ログインしているユーザーID（例: 'stu_5'）がURLに含まれている作品だけを絞り込む
+            // ※ 'guest_a' などのゲストアカウントの場合は全ての作品を表示させます
+            let userGames = allGames;
+            if (currentUserId !== "guest_a") {
+                userGames = allGames.filter(game => game.url.includes(`./${currentUserId}/`));
+            }
+
+            // ② さらに、現在選ばれているタブのカテゴリー（'game' または 'edu'）と一致するものだけを抽出
+            const filteredGames = userGames.filter(game => game.category === currentCategory);
 
             if (filteredGames.length === 0) {
                 container.innerHTML = `<p style="color: #888; margin-top: 30px;">このカテゴリーの作品はまだ登録されていません。</p>`;
