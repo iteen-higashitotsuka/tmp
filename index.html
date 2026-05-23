@@ -3,44 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iteenゲームポータル & 教室案内</title>
+    <title>iteenゲーム・教育ポータル & 教室案内</title>
     <style>
-        /* 🎨 全体の配色設定（ここで背景色などを変えられます） */
+        /* 🎨 全体の配色設定 */
         body { 
             font-family: sans-serif; 
             text-align: center; 
-            /* 👇 薄い水色の場合はこちら */
             background: #eef7fc; 
-            /* 👇 クリーム色にしたい場合は上の行を消して、下の行のコメントアウト(//)を外してください */
-            /* background: #fdfaf4; */
-            color: #333; /* 文字色を読みやすい濃いグレーに */
+            color: #333; 
             padding: 0; 
             margin: 0; 
         }
 
-        /* 🏢 ヘッダー（ロゴ・教室名）エリア */
+        /* 🏢 ヘッダーエリア */
         header {
             background: #ffffff;
             padding: 30px 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .logo-area {
-            max-width: 200px;
-            margin: 0 auto 10px auto;
-        }
-        .logo-placeholder {
-            background: #eceff1;
-            color: #78909c;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border: 2px dashed #b0bec5;
-        }
         header h1 {
             margin: 10px 0 5px 0;
             font-size: 1.8rem;
-            color: #0277bd; /* 教室らしい爽やかなブルー */
+            color: #0277bd; 
         }
         header .subtitle {
             margin: 0;
@@ -55,11 +39,11 @@
             padding: 20px;
         }
 
-        /* 🔑 ログイン・コンテナのスタイル */
+        /* 🔑 ログイン・コンテナ */
         .container { 
             max-width: 400px; 
             margin: 40px auto; 
-            background: #ffffff; /* 白ベースのボックスに */
+            background: #ffffff; 
             padding: 40px; 
             border-radius: 12px; 
             box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
@@ -67,7 +51,6 @@
         }
         .container h2 { margin-top: 0; color: #0277bd; }
         
-        /* 入力フォームの装飾 */
         input { 
             display: block; 
             width: 100%; 
@@ -86,13 +69,12 @@
             background: #ffffff;
         }
 
-        /* ボタンの装飾 */
         button { 
             width: 100%; 
             padding: 12px; 
             border: none; 
             border-radius: 6px; 
-            background: #ff9800; /* 生徒の目を引く元気なオレンジに変更 */
+            background: #ff9800; 
             color: #fff; 
             font-size: 1rem; 
             font-weight: bold; 
@@ -103,9 +85,45 @@
         button:hover { background: #e65100; }
         .error { color: #ff1744; margin-top: 15px; display: none; font-size: 0.9rem; font-weight: bold; }
         
-        /* 🕹️ ゲーム一覧画面のスタイル */
+        /* 🕹️ ポータル画面のスタイル */
         #portal-screen { display: none; margin: 40px auto; padding: 20px; }
-        .game-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+        
+        /* 🗂️ タブUIのスタイル */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .tab-button {
+            background: #e0e0e0;
+            color: #555;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: auto;
+            box-shadow: none;
+        }
+        .tab-button.active {
+            background: #0277bd;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(2,119,189,0.3);
+        }
+        .tab-button:hover {
+            background: #b0bec5;
+        }
+        .tab-button.active:hover {
+            background: #01579b;
+        }
+
+        /* 🃏 コンテンツカードのスタイル */
+        .game-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; min-height: 150px; }
         .game-card {
             display: block; width: 220px; padding: 25px; background: #ffffff; 
             border-radius: 12px; border: 1px solid #e0e0e0; text-decoration: none; color: #333; 
@@ -113,6 +131,8 @@
         }
         .game-card:hover { border-color: #0277bd; background: #f4fbf0; transform: translateY(-5px); box-shadow: 0 6px 15px rgba(2,119,189,0.15); }
         .game-title { font-size: 1.2rem; font-weight: bold; color: #0277bd; }
+        .game-desc { font-size: 0.85rem; color: #666; margin-top: 8px; }
+        
         .logout-btn { background: #757575; color: #fff; margin-top: 50px; padding: 8px 20px; font-size: 0.9rem; width: auto; box-shadow: none; }
         .logout-btn:hover { background: #424242; }
 
@@ -142,33 +162,31 @@
 <body>
 
     <header>
-        <!--
-        <div class="logo-area">
-            <div class="logo-placeholder">ここにロゴ画像を配置</div>
-       
-        </div>
-        -->
         <h1>iTeen 西武東戸塚S.C.校</h1>
-        <p class="subtitle">教室で作成したゲームを遊ぼう！</p>
+        <p class="subtitle">教室で作成した作品を遊ぼう・学ぼう！</p>
     </header>
 
     <div class="main-content">
         
         <div id="login-screen" class="container">
             <h2>会員用ログイン</h2>
-            <p style="color: #666; font-size: 0.9rem;">IDとパスワードを入力すると、あなた専用のゲームリストが表示されます。</p>
+            <p style="color: #666; font-size: 0.9rem;">IDとパスワードを入力すると、あなた専用の作品リストが表示されます。</p>
             <input type="text" id="username" placeholder="ユーザーID">
             <input type="password" id="password" placeholder="パスワード">
-            <button onclick="checkLogin()">ログインしてゲームを開く</button>
+            <button onclick="checkLogin()">ログインしてポータルを開く</button>
             <p id="error-message" class="error">IDまたはパスワードが違います</p>
         </div>
 
         <div id="portal-screen">
             <h1 id="welcome-message" style="color: #0277bd;">ようこそ！</h1>
-            <p style="color: #555;">あなた専用のゲームラインナップです。タップして遊んでね！</p>
+            <p style="color: #555;">あなた専用のラインナップです。タブを切り替えて選んでね！</p>
             
-            <div id="game-container" class="game-list">
-                </div>
+            <div class="tab-container">
+                <button id="tab-game" class="tab-button active" onclick="switchTab('game')">🕹️ ゲーム作品</button>
+                <button id="tab-edu" class="tab-button" onclick="switchTab('edu')">🧪 教育・シミュレーション</button>
+            </div>
+
+            <div id="game-container" class="game-list"></div>
 
             <button onclick="logout()" class="logout-btn">ログアウト</button>
         </div>
@@ -178,9 +196,6 @@
     <div class="access-section">
         <h3>教室へのアクセス</h3>
         <p style="color: #666; margin-bottom: 5px;">〒244-8530 神奈川県横浜市戸塚区品濃町５３７−１ 西武東戸塚S.C. モール館 5階</p>
-        <!--
-        <p style="color: #666; margin-top: 0;">お問合わせ：XXXX-XXX-XXX</p>
-        -->
         <div class="map-container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d208618.58077461686!2d139.1545091062556!3d35.21480444325176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60185b17f541a08f%3A0xd373a3b234dedd3e!2zaVRlZW7opb_mrabmnbHmiLjloZpTLkMu5qCh!5e0!3m2!1sja!2sjp!4v1779353865007!5m2!1sja!2sjp"
             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
@@ -188,32 +203,44 @@
     </div>
 
     <script>
-        // 🔑 ユーザーごとの配信データ
+        // 🔑 ユーザーごとの配信データ (categoryを追加)
+        // category: 'game' (ゲーム) / 'edu' (教育・シミュレーション)
         const userData = {
             "guest_a": {
                 password: "abc123",
                 name: "ゲスト",
                 games: [
-                    { title: "ゾンビゲーム", url: "./stu_1/" },
-                    { title: "カーレース", url: "./stu2/" },
-                    { title: "3Dシューティング", url: "./stu_3/shooting_game" },
-                    { title: "二人対戦", url: "./stu_4/game1" },
-                    { title: "ブロック崩し", url: "./stu_5/game1" },
-                    { title: "ポテト爆発", url: "./stu_6/potato_explosion" },
-                    { title: "棒人間ファイト", url: "./stu_6/bouningen_fighting" },
-                    { title: "宇宙シューティング", url: "./stu_6/space_shooting" }
+                    { title: "ゾンビゲーム", category: "game", url: "./stu_1/"},
+                    { title: "カーレース", category: "game", url: "./stu2/"},
+                    { title: "3Dシューティング", category: "game", url: "./stu_3/shooting_game"},
+                    { title: "二人対戦", category: "game", url: "./stu_4/game1"},
+                    { title: "ブロック崩し", category: "game", url: "./stu_5/game1"},
+                    { title: "ポテト爆発", category: "game", url: "./stu_6/potato_explosion"},
+                    { title: "棒人間ファイト", category: "game", url: "./stu_6/bouningen_fighting"},
+                    { title: "宇宙シューティング", category: "game", url: "./stu_6/space_shooting"},
+                    { title: "3D建築ゲーム", category: "game", url: "./stu_7/3Dbuilding"},
+                    
+                    // 教育カテゴリーの作品
+                    { title: "流体シミュレーション", category: "edu", url: "./edu_fluid/"},
+                    { title: "素数キャッチャー", category: "edu", url: "./edu_math/"},
+                    { title: "天体運行モデル", category: "edu", url: "./edu_space/"}
                 ]
             },
             "t_chika": {
                 password: "0610",
                 name: "近村",
                 games: [
-                    { title: "ゾンビゲーム", url: "./k20260516/" },
-                    { title: "カーレース", url: "./k20260521/" },
-                    { title: "シューティング", url: "./k20260522_1/shooting_game" }
+                    { title: "ゾンビゲーム", category: "game", url: "./k20260516/", desc: "アクションゲーム" },
+                    { title: "カーレース", category: "game", url: "./k20260521/", desc: "レースゲーム" },
+                    { title: "シューティング", category: "game", url: "./k20260522_1/shooting_game", desc: "シューティングゲーム" },
+                    { title: "物理演算シミュレータ", category: "edu", url: "./k_physics/", desc: "重力と衝突の実験ツール" }
                 ]
             }
         };
+
+        // 現在ログインしているユーザーと選択されているカテゴリーを保持
+        let currentUserId = "";
+        let currentCategory = "game";
 
         function checkLogin() {
             const userIn = document.getElementById("username").value;
@@ -222,30 +249,68 @@
 
             if (userData[userIn] && userData[userIn].password === passIn) {
                 errorMsg.style.display = "none";
-                showPortal(userIn);
+                currentUserId = userIn;
+                showPortal();
             } else {
                 errorMsg.style.display = "block";
             }
         }
 
-        function showPortal(userId) {
-            const user = userData[userId];
+        // タブを切り替える関数
+        function switchTab(category) {
+            currentCategory = category;
             
-            // ログイン成功の証拠（通行証）をブラウザに保存（タブを閉じたら消える安全な保存先です）
+            // タブボタンのアクティブ状態の見た目を切り替え
+            document.getElementById("tab-game").classList.remove("active");
+            document.getElementById("tab-edu").classList.remove("active");
+            
+            if (category === "game") {
+                document.getElementById("tab-game").classList.add("active");
+            } else {
+                document.getElementById("tab-edu").classList.add("active");
+            }
+            
+            // 表示するコンテンツを再描画
+            renderContents();
+        }
+
+        // ポータル画面全体の表示
+        function showPortal() {
             sessionStorage.setItem("game_access_token", "allowed_user_chika");
 
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("portal-screen").style.display = "block";
+            
+            const user = userData[currentUserId];
             document.getElementById("welcome-message").innerText = `✨ ようこそ、${user.name}`;
 
+            // 初期表示は「game」カテゴリー
+            switchTab("game");
+        }
+
+        // 選択されたカテゴリーの作品だけを画面に描画する関数
+        function renderContents() {
+            const user = userData[currentUserId];
             const container = document.getElementById("game-container");
             container.innerHTML = "";
 
-            user.games.forEach(game => {
+            // ユーザーの全作品から、現在選ばれているカテゴリーと一致するものだけを抽出
+            const filteredGames = user.games.filter(game => game.category === currentCategory);
+
+            if (filteredGames.length === 0) {
+                container.innerHTML = `<p style="color: #888; margin-top: 30px;">このカテゴリーの作品はまだ登録されていません。</p>`;
+                return;
+            }
+
+            filteredGames.forEach(game => {
                 const card = document.createElement("a");
                 card.href = game.url;
                 card.className = "game-card";
-                card.innerHTML = `<div class="game-title">${game.title}</div>`;
+                
+                // 説明文(desc)があれば一緒に表示
+                const description = game.desc ? `<div class="game-desc">${game.desc}</div>` : "";
+                card.innerHTML = `<div class="game-title">${game.title}</div>${description}`;
+                
                 container.appendChild(card);
             });
         }
@@ -255,6 +320,7 @@
             document.getElementById("password").value = "";
             document.getElementById("login-screen").style.display = "block";
             document.getElementById("portal-screen").style.display = "none";
+            currentUserId = "";
         }
     </script>
 </body>
